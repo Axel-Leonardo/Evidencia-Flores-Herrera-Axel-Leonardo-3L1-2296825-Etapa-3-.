@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evidencia Etapa 3 - Arcade</title>
+<style>
+  :root { --fondo:#14123a; --panel:#1f1b57; --texto:#f4f1ff; --acento:#3df5e0; --error:#ff5c8a; --ok:#ffd23f; }
+  * { box-sizing: border-box; }
+  body { margin:0; padding:16px; background:var(--fondo); color:var(--texto);
+         font-family:Arial, Helvetica, sans-serif; font-size:16px; line-height:1.5; }
+  main { max-width:720px; margin:0 auto; }
+  h1, h2 { color:var(--acento); line-height:1.3; }
+  h1 { font-size:26px; text-align:center; }
+  h2 { font-size:20px; margin-top:0; }
+  section { background:var(--panel); border:3px solid var(--acento); padding:16px; margin-bottom:20px; }
+  label { display:block; margin-top:10px; }
+  input[type="text"], input[type="number"], input[type="password"], select {
+    width:100%; padding:8px; font:inherit; background:var(--fondo); color:var(--texto); border:2px solid var(--acento); }
+  .opcion { display:inline-block; margin-right:14px; }
+  button { font:inherit; margin:10px 8px 0 0; padding:8px 14px; cursor:pointer;
+           background:var(--acento); color:var(--fondo); border:none; box-shadow:0 4px 0 #1a8f84; }
+  button:active { transform:translateY(4px); box-shadow:none; }
+  button.rojo { background:var(--error); box-shadow:0 4px 0 #a02c4c; }
+  :focus-visible { outline:3px solid var(--ok); outline-offset:2px; }
+  .mensaje { margin-top:10px; color:var(--ok); min-height:1.3em; }
+  .errores { color:var(--error); margin:10px 0 0; padding-left:20px; }
+  .item { padding:4px 0; }
+  ul.guardados { padding-left:20px; }
+  ul.guardados li { margin-bottom:10px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>EVIDENCIA ETAPA 3<br>ARCADE DE FORMULARIOS</h1>
+
+  <!-- 1. EVENTOS: onclick, onfocus, reset, mousedown, mouseup -->
+  <section>
+    <h2>Nivel 1: Eventos</h2>
+    <form id="formJuego" onreset="mostrar('estadoEventos', 'reset: el formulario quedó limpio'); alert('reset: el formulario quedó limpio')">
+      <label for="apodo">Apodo de jugador</label>
+      <input type="text" id="apodo" placeholder="Escribe tu apodo"
+             onfocus="mostrar('estadoEventos', 'onfocus: estás escribiendo tu apodo')">
+      <button type="button" onclick="sumarMoneda()">Moneda +1 (onclick)</button>
+      <button type="button" id="btnBoton"
+              onmousedown="mostrar('estadoEventos', 'mousedown: botón presionado')"
+              onmouseup="mostrar('estadoEventos', 'mouseup: botón soltado'); alert('mouseup: soltaste el botón')">Mantén presionado</button>
+      <button type="reset" class="rojo">Reiniciar</button>
+    </form>
+    <p>Monedas: <strong id="monedas">0</strong></p>
+    <p class="mensaje" id="estadoEventos"></p>
+  </section>
+
+  <!-- 2. MÉTODOS: getElementById, querySelector, querySelectorAll -->
+  <section>
+    <h2>Nivel 2: Métodos del DOM</h2>
+    <div class="item">Espada</div>
+    <div class="item">Escudo</div>
+    <div class="item">Poción</div>
+    <button onclick="usarGetElementById()">getElementById</button>
+    <button onclick="usarQuerySelector()">querySelector</button>
+    <button onclick="usarQuerySelectorAll()">querySelectorAll</button>
+    <p class="mensaje" id="resultadoMetodos"></p>
+  </section>
+
+  <!-- 3. PERSONALIZAR -->
+  <section>
+    <h2>Nivel 3: Personalizar</h2>
+    <p>Elige el color de tu consola:</p>
+    <button onclick="cambiarColor('#3df5e0')">Cian</button>
+    <button onclick="cambiarColor('#ff5c8a')" class="rojo">Rosa</button>
+    <button onclick="cambiarColor('#ffd23f')">Amarillo</button>
+  </section>
+
+  <!-- 4. FORMULARIO DE INICIO DE SESIÓN (propiedades: action, elements, method) -->
+  <section>
+    <h2>Nivel 4: Inicio de sesión</h2>
+    <form id="formLogin" action="#" method="post">
+      <label for="usuario">Usuario</label>
+      <input type="text" id="usuario" name="usuario" placeholder="jugador1">
+      <label for="clave">Contraseña</label>
+      <input type="password" id="clave" name="clave" placeholder="1234">
+      <button type="submit">Entrar</button>
+      <button type="button" onclick="verPropiedades()">Ver propiedades</button>
+    </form>
+    <ul class="errores" id="erroresLogin"></ul>
+    <p class="mensaje" id="mensajeLogin"></p>
+  </section>
+
+  <!-- 5. SOLICITUD DE EMPLEO (validación) -->
+  <section>
+    <h2>Nivel final: Solicitud de empleo</h2>
+    <form id="formSolicitud" action="#" method="post">
+      <label for="nombre">Nombre completo</label>
+      <input type="text" id="nombre" name="nombre">
+
+      <label for="edad">Edad</label>
+      <input type="number" id="edad" name="edad">
+
+      <label for="rfc">RFC</label>
+      <input type="text" id="rfc" name="rfc" maxlength="13" placeholder="XXXX000000XXX">
+
+      <label>Sexo</label>
+      <span class="opcion"><input type="radio" id="sexoM" name="sexo" value="Masculino"> <label for="sexoM" style="display:inline">Masculino</label></span>
+      <span class="opcion"><input type="radio" id="sexoF" name="sexo" value="Femenino"> <label for="sexoF" style="display:inline">Femenino</label></span>
+
+      <label>Habilidades tecnológicas</label>
+      <span class="opcion"><input type="checkbox" name="habilidad" value="Word"> Word</span>
+      <span class="opcion"><input type="checkbox" name="habilidad" value="Excel"> Excel</span>
+      <span class="opcion"><input type="checkbox" name="habilidad" value="Programación"> Programación</span>
+      <span class="opcion"><input type="checkbox" name="habilidad" value="Redes"> Redes</span>
+      <span class="opcion"><input type="checkbox" name="habilidad" value="Bases de datos"> Bases de datos</span>
+
+      <label for="sucursal">Sucursal más cercana</label>
+      <select id="sucursal" name="sucursal">
+        <option value="">-- Selecciona una sucursal --</option>
+        <option value="Centro">Centro</option>
+        <option value="Norte">Norte</option>
+        <option value="Sur">Sur</option>
+        <option value="Guadalupe">Guadalupe</option>
+      </select>
+
+      <button type="button" onclick="guardarSolicitud()">Guardar solicitud</button>
+      <button type="reset" class="rojo" onclick="alert('Formulario limpio')">Limpiar</button>
+    </form>
+    <ul class="errores" id="erroresSolicitud"></ul>
+    <p class="mensaje" id="mensajeSolicitud"></p>
+  </section>
+
+  <!-- 6. DATOS GUARDADOS -->
+  <section>
+    <h2>Partidas guardadas</h2>
+    <ul class="guardados" id="listaGuardados"></ul>
+    <p id="vacio">Todavía no hay solicitudes guardadas.</p>
+  </section>
+</main>
+
+<script>
+  // Función de ayuda: escribe un texto en un elemento
+  function mostrar(id, texto) {
+    document.getElementById(id).textContent = texto;
+  }
+
+  // ---------- Eventos ----------
+  let monedas = 0;
+  function sumarMoneda() {
+    monedas++;
+    mostrar("monedas", monedas);
+    mostrar("estadoEventos", "onclick: ¡ganaste una moneda!");
+    alert("¡Ganaste una moneda! Total: " + monedas);
+  }
+
+  // ---------- Métodos del DOM ----------
+  function usarGetElementById() {
+    // Busca un elemento por su id
+    const monedasEl = document.getElementById("monedas");
+    mostrar("resultadoMetodos", "getElementById: tienes " + monedasEl.textContent + " monedas.");
+    alert("getElementById: tienes " + monedasEl.textContent + " monedas.");
+  }
+  function usarQuerySelector() {
+    // Devuelve solo el PRIMER elemento que coincide
+    const primero = document.querySelector(".item");
+    primero.style.color = "var(--ok)";
+    mostrar("resultadoMetodos", "querySelector: el primer objeto es " + primero.textContent + ".");
+    alert("querySelector: el primer objeto es " + primero.textContent + ".");
+  }
+  function usarQuerySelectorAll() {
+    // Devuelve TODOS los elementos que coinciden
+    const todos = document.querySelectorAll(".item");
+    todos.forEach(function (el) { el.style.color = "var(--error)"; });
+    mostrar("resultadoMetodos", "querySelectorAll: encontré " + todos.length + " objetos.");
+    alert("querySelectorAll: encontré " + todos.length + " objetos.");
+  }
+
+  // ---------- Personalizar ----------
+  function cambiarColor(color) {
+    document.documentElement.style.setProperty("--acento", color);
+    alert("¡Color de consola cambiado!");
+  }
+
+  // ---------- Inicio de sesión ----------
+  const formLogin = document.getElementById("formLogin");
+
+  function verPropiedades() {
+    // Propiedades del formulario: action, method y elements
+    const texto = "action: " + formLogin.action + "\nmethod: " + formLogin.method +
+      "\nelements: " + formLogin.elements.length;
+    mostrar("mensajeLogin", texto.replace(/\n/g, " | "));
+    alert(texto);
+  }
+
+  formLogin.addEventListener("submit", function (e) {
+    e.preventDefault(); // evita que la página se recargue
+    const errores = [];
+    const usuario = formLogin.elements["usuario"].value.trim();
+    const clave = formLogin.elements["clave"].value;
+
+    if (usuario === "") errores.push("Escribe tu usuario.");
+    if (clave === "") errores.push("Escribe tu contraseña.");
+    if (errores.length === 0 && (usuario !== "jugador1" || clave !== "1234")) {
+      errores.push("Usuario o contraseña incorrectos (prueba jugador1 / 1234).");
+    }
+
+    pintarErrores("erroresLogin", errores);
+    mostrar("mensajeLogin", errores.length === 0 ? "¡Bienvenido, " + usuario + "! Nivel desbloqueado." : "");
+    if (errores.length === 0) {
+      alert("¡Bienvenido, " + usuario + "! Nivel desbloqueado.");
+      formLogin.reset(); // método reset()
+    } else {
+      alert("Error en el inicio de sesión:\n- " + errores.join("\n- "));
+    }
+  });
+
+  // ---------- Solicitud de empleo ----------
+  const solicitudes = []; // aquí se guardan todos los datos
+
+  function pintarErrores(idLista, errores) {
+    const lista = document.getElementById(idLista);
+    lista.innerHTML = "";
+    errores.forEach(function (texto) {
+      const li = document.createElement("li");
+      li.textContent = texto;
+      lista.appendChild(li);
+    });
+  }
+
+  function guardarSolicitud() {
+    const f = document.getElementById("formSolicitud");
+    const nombre = f.elements["nombre"].value.trim();
+    const edad = Number(f.elements["edad"].value);
+    const rfc = f.elements["rfc"].value.trim().toUpperCase();
+    const sexo = f.querySelector('input[name="sexo"]:checked');
+    const habilidades = Array.from(f.querySelectorAll('input[name="habilidad"]:checked'))
+                             .map(function (c) { return c.value; });
+    const sucursal = f.elements["sucursal"].value;
+    const errores = [];
+
+    if (nombre.length < 3 || !/^[A-Za-zÁÉÍÓÚÜÑáéíóúüñ ]+$/.test(nombre)) {
+      errores.push("Nombre: mínimo 3 letras, solo letras y espacios.");
+    }
+    if (!Number.isInteger(edad) || edad < 18 || edad > 99) {
+      errores.push("Edad: debe ser un número entero entre 18 y 99.");
+    }
+    if (!/^[A-ZÑ&]{4}[0-9]{6}[A-Z0-9]{3}$/.test(rfc)) {
+      errores.push("RFC: deben ser 13 caracteres (4 letras, 6 números y 3 letras o números).");
+    }
+    if (sexo === null) errores.push("Sexo: elige una opción.");
+    if (habilidades.length === 0) errores.push("Habilidades: marca al menos una.");
+    if (sucursal === "") errores.push("Sucursal: selecciona una.");
+
+    pintarErrores("erroresSolicitud", errores);
+
+    if (errores.length > 0) {
+      mostrar("mensajeSolicitud", "");
+      alert("Corrige estos datos:\n- " + errores.join("\n- "));
+      return;
+    }
+
+    solicitudes.push({ nombre: nombre, edad: edad, rfc: rfc, sexo: sexo.value,
+                       habilidades: habilidades, sucursal: sucursal });
+    mostrar("mensajeSolicitud", "¡Solicitud guardada! Partida #" + solicitudes.length);
+    f.reset();
+    mostrarGuardados();
+    alert("¡Solicitud guardada! Partida #" + solicitudes.length);
+  }
+
+  function mostrarGuardados() {
+    const lista = document.getElementById("listaGuardados");
+    lista.innerHTML = "";
+    solicitudes.forEach(function (s, i) {
+      const li = document.createElement("li");
+      li.textContent = "#" + (i + 1) + " | Nombre: " + s.nombre + " | Edad: " + s.edad +
+        " | RFC: " + s.rfc + " | Sexo: " + s.sexo +
+        " | Habilidades: " + s.habilidades.join(", ") + " | Sucursal: " + s.sucursal;
+      lista.appendChild(li);
+    });
+    document.getElementById("vacio").style.display = solicitudes.length ? "none" : "block";
+  }
+</script>
+</body>
+</html>
